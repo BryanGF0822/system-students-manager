@@ -19,9 +19,9 @@ import Foundation
 public class AdvancedStudent: Student {
     let extraPoints: Double
     
-    public init(name: String, age: Int, email: String, subjets: [Subject], scores: [Double], extraPoints: Double) {
+    public init(name: String, age: Int, email: String, subjects: [Subject], scores: [Double], extraPoints: Double) {
         self.extraPoints = extraPoints
-        super.init(name: name, age: age, email: email, subjets: subjets, scores: scores)
+        super.init(name: name, age: age, email: email, subjects: subjects, scores: scores)
     }
     
     /*
@@ -31,7 +31,7 @@ public class AdvancedStudent: Student {
      
      Nota: Para poder sobreescribir la funcion debemos agregar la palabra "override" antes la palabra "func"
      */
-    public override func studentDescription() -> String {
+    public override func describe() -> String {
         var desc = """
         ---------------------------
         Informacion del estudiante (Avanzado):
@@ -42,8 +42,8 @@ public class AdvancedStudent: Student {
         # Puntos extra: \(extraPoints)
         # Materias que esta cursando:
         """
-        for subjet in subjets {
-            desc += "\n\(subjet.subjectDescription())"
+        for subject in subjects {
+            desc += "\n\(subject.describe())"
         }
         desc += """
         \n---------------------------

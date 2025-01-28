@@ -35,27 +35,38 @@
 
 import Foundation
 
-public struct Subject {
+public struct Subject: Describable, Hashable {
     let name: String
     let teacherName: String
-    let minimumScore: Double
+    let level: SubjectLevel
     
-    public init(name: String, teacherName: String, minimumScore: Double) {
+    public init(name: String, teacherName: String, level: SubjectLevel) {
         self.name = name
         self.teacherName = teacherName
-        self.minimumScore = minimumScore
+        self.level = level
     }
     
-    public func isPassed(score: Double) -> Bool {
-        return score >= minimumScore
+    public func isPassed(_ score: Double) -> Bool {
+        return score >= minimumScore()
     }
     
-    public func subjectDescription() -> String {
+    public func describe() -> String {
         return """
         ---------------------------
         Nombre del curso: \(name)
         Profesor: \(teacherName)
-        Puntaje minimo para pasar: \(minimumScore)
+        Puntaje minimo para pasar: \(minimumScore())
         """
+    }
+    
+    private func minimumScore() -> Double {
+        switch level {
+        case .basic:
+            return 50
+        case .intermediate:
+            return 70
+        case .advanced:
+            return 80
+        }
     }
 }
