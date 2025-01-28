@@ -8,8 +8,8 @@
 import Foundation
 
 public protocol Manageable {
-    func insertStudent(_ student: Student)
-    func asignSubjectToStudent(subject: Subject, score: Double, student: Student)
+    func insertStudent(_ student: Student?)
+    func asignSubjectToStudent(subject: Subject, score: Double, student: Student?)
     func generateStudentsReport()
     func getApprovedStudents() -> [Student]
     func getReprobedStudents() -> [Student]
@@ -26,15 +26,31 @@ public class StudentsManager: Manageable {
         self.students = students
     }
     
-    public func insertStudent(_ student: Student) {
+    /*
+     El guard me pertime mitigar posible errores
+     que pueden hacer que mi aplicacion falle.
+     
+     En este casi si puede acceder a un student,
+     entonces ejecuta la linea 'students.append(student).
+     De lo contrario "else" entonces, returna nada o
+     podemos dejar un mensaje de error para notificar o hacer un registro de logs.
+     */
+    public func insertStudent(_ student: Student?) {
+        guard let student = student else {
+            return
+        }
         students.append(student)
     }
     
-    public func asignSubjectToStudent(subject: Subject, score: Double, student: Student) {
-        for s in students {
-            if student.email.elementsEqual(s.email) {
-                s.assingSubject(subject: subject, score: score)
+    public func asignSubjectToStudent(subject: Subject, score: Double, student: Student?) {
+        if let student {
+            for s in students {
+                if student.email.elementsEqual(s.email) {
+                    s.assingSubject(subject: subject, score: score)
+                }
             }
+        } else {
+            // Todo: Lanzar un error.
         }
     }
     
